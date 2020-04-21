@@ -41,8 +41,11 @@ defmodule Sponsors.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:stripity_stripe, "~> 2.0"},
+      # Dev & Test dependencies
+      {:bypass, "~> 1.0", only: :test},
       {:credo, "~> 1.4", only: [:dev, :test]},
-      {:ex_machina, "~> 2.4", only: :test}
+      {:ex_machina, "~> 2.4", only: :test},
+      {:mox, "~> 0.5", only: :test}
     ]
   end
 

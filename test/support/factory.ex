@@ -14,8 +14,8 @@ defmodule Sponsors.Factory do
   def subscription_factory do
     %Subscription{
       canceled: false,
-      internal_customer_id: sequence(:customer_id, &"1234#{&1}")
-      stripe_subscription_id: sequence(:subscription_id, &"sub_H8gD56NJYhAf#{&1}"),
+      customer_id: sequence(:customer_id, &"1234#{&1}"),
+      stripe_subscription_id: sequence(:subscription_id, &"sub_H8gD56NJYhAf#{&1}")
     }
   end
 end

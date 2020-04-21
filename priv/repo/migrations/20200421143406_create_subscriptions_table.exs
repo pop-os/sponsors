@@ -4,7 +4,7 @@ defmodule Sponsors.Repo.Migrations.CreateSubscriptionsTable do
   def change do
     create table(:subscriptions) do
       add :canceled, :boolean, default: false
-      add :internal_customer_id, :string, null: false
+      add :customer_id, :string, null: false
       add :stripe_subscription_id, :string, null: false
 
       timestamps()
@@ -19,5 +19,7 @@ defmodule Sponsors.Repo.Migrations.CreateSubscriptionsTable do
 
       timestamps()
     end
+
+    create unique_index(:invoices, [:stripe_invoice_id])
   end
 end
