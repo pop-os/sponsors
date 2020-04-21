@@ -9,9 +9,10 @@ import Config
 
 config :sponsors,
   ecto_repos: [Sponsors.Repo],
-  subscription_plan: "stripe_plan",
   stripe_module: Sponsors.Stripe,
-  subscription_module: Sponsors.Subscriptions
+  stripe_signing_secret: "stripe_webhook_secret",
+  subscription_module: Sponsors.Subscriptions,
+  subscription_plan: "stripe_plan"
 
 # Configures the endpoint
 config :sponsors, SponsorsWeb.Endpoint,
