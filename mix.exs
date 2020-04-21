@@ -40,7 +40,9 @@ defmodule Sponsors.MixProject do
       {:phoenix_pubsub, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
-      {:credo, "~> 1.4", only: [:dev, :test]}
+      {:stripity_stripe, "~> 2.0"},
+      {:credo, "~> 1.4", only: [:dev, :test]},
+      {:ex_machina, "~> 2.4", only: :test}
     ]
   end
 
