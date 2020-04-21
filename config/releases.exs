@@ -19,7 +19,7 @@ stripe_config =
   |> Jason.decode!()
 
 config :sponsors,
-  stripe_secret: stripe_config["webhook_secret"],
+  stripe_signing_secret: stripe_config["webhook_secret"],
   subscription_plan: stripe_config["subscription_plan"]
 
 config :stripity_stripe, api_key: stripe_config["secret_key"]
