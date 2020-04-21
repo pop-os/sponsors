@@ -40,7 +40,7 @@ defmodule Sponsors.MixProject do
       {:phoenix_ecto, "~> 4.0"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
-      {:stripity_stripe, "~> 2.0"},
+      {:stripity_stripe, "~> 2.8"},
       # Dev & Test dependencies
       {:bypass, "~> 1.0", only: :test},
       {:credo, "~> 1.4", only: [:dev, :test]},

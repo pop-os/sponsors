@@ -13,6 +13,10 @@ defmodule SponsorsWeb.Router do
     pipe_through :api
 
     get "/health_check", HealthCheckController, :health_check
+
+    scope "/webhooks", Webhooks do
+      post "/stripe", StripeController, :create
+    end
   end
 
   scope "/", SponsorsWeb do

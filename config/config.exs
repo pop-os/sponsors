@@ -9,9 +9,10 @@ use Mix.Config
 
 config :sponsors,
   ecto_repos: [Sponsors.Repo],
-  subscription_plan: System.get_env("STRIPE_PLAN"),
   stripe_module: Sponsors.Stripe,
-  subscription_module: Sponsors.Subscriptions
+  stripe_secret: "stripe_webhook_secret",
+  subscription_module: Sponsors.Subscriptions,
+  subscription_plan: "stripe_plan"
 
 # Configures the endpoint
 config :sponsors, SponsorsWeb.Endpoint,
@@ -31,7 +32,7 @@ config :sponsors, Sponsors.Guardian,
   issuer: "system76",
   secret_key: System.get_env("JWT_SECRET_KEY", "averysecretsecret")
 
-config :stripity_stripe, api_key: System.get_env("STRIPE_SECRET_KEY")
+config :stripity_stripe, api_key: "stripe_secret_key"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
