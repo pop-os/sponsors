@@ -8,7 +8,9 @@
 use Mix.Config
 
 config :sponsors,
-  ecto_repos: [Sponsors.Repo]
+  ecto_repos: [Sponsors.Repo],
+  subscription_plan: "",
+  stripe_module: Sponsors.Stripe
 
 # Configures the endpoint
 config :sponsors, SponsorsWeb.Endpoint,

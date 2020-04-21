@@ -12,7 +12,7 @@ defmodule Sponsors.Schemas.SubscriptionTest do
     end
 
     test "returns an invalid changeset when missing required fields" do
-      without_customer = params_for(:subscription, internal_customer_id: nil)
+      without_customer = params_for(:subscription, customer_id: nil)
       assert %{valid?: false} = Subscription.changeset(%Subscription{}, without_customer)
     end
   end

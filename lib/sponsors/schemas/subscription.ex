@@ -6,11 +6,11 @@ defmodule Sponsors.Schemas.Subscription do
 
   import Ecto.Changeset
 
-  alias Sponsors.Sponsors.Schemas.Invoice
+  alias Sponsors.Schemas.Invoice
 
   schema "subscriptions" do
     field :canceled, :boolean
-    field :internal_customer_id, :string
+    field :customer_id, :string
     field :stripe_subscription_id, :string
 
     has_many :invoices, Invoice
@@ -20,8 +20,8 @@ defmodule Sponsors.Schemas.Subscription do
 
   def changeset(subscription, params) do
     subscription
-    |> cast(params, [:canceled, :internal_customer_id, :stripe_subscription_id])
-    |> validate_required([:internal_customer_id, :stripe_subscription_id])
+    |> cast(params, [:canceled, :customer_id, :stripe_subscription_id])
+    |> validate_required([:customer_id, :stripe_subscription_id])
     |> unique_constraint(:stripe_subscription_id)
   end
 end

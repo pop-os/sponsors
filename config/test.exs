@@ -16,3 +16,6 @@ config :sponsors, SponsorsWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :sponsors,
+  stripe_module: Sponsors.StripeMock
