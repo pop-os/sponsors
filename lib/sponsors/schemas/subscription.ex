@@ -8,6 +8,14 @@ defmodule Sponsors.Schemas.Subscription do
 
   alias Sponsors.Schemas.Invoice
 
+  @type t :: %{
+          canceled: boolean(),
+          customer_id: String.t(),
+          inserted_at: DateTime.t(),
+          stripe_subscription_id: String.t(),
+          updated_at: DateTime.t()
+        }
+
   schema "subscriptions" do
     field :canceled, :boolean
     field :customer_id, :string

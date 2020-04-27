@@ -34,10 +34,10 @@ defmodule Sponsors.MixProject do
   defp deps do
     [
       {:ecto_sql, "~> 3.1"},
+      {:guardian, "~> 2.1"},
       {:jason, "~> 1.0"},
-      {:phoenix, "~> 1.4.16"},
+      {:phoenix, "~> 1.5"},
       {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_pubsub, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:stripity_stripe, "~> 2.0"},

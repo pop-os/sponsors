@@ -6,6 +6,13 @@ defmodule Sponsors.Subscriptions do
   alias Sponsors.Schemas.Subscription
   alias Sponsors.Repo
 
+  @callback cancel(String.t()) :: :ok | {:error, :subscription_cancelation_failed | :subscription_not_found}
+
+  @callback create(String.t(), String.t()) :: {:ok, Subscription.t()} | {:error, Ecto.Changeset.t()}
+
+  @doc """
+  Create a Stripe subscription and persist it to our database
+  """
   def create(stripe_customer_id, internal_customer_id) do
     with {:ok, stripe_subscription_id} <- stripe().subscribe(stripe_customer_id) do
       params = %{customer_id: internal_customer_id, stripe_subscription_id: stripe_subscription_id}
@@ -16,9 +23,13 @@ defmodule Sponsors.Subscriptions do
     end
   end
 
+  @doc """
+  Cancel a subscription and update the database's record
+  """
   def cancel(id) do
     with %{stripe_subscription_id: stripe_subscription_id} = subscription <- Repo.get(Subscription, id),
-         {:ok, _deleted_subscription} <- Repo.update(subscription, %{canceled: true}),
+         changeset = Subscription.changeset(subscription, %{canceled: true}),
+         {:ok, _deleted_subscription} <- Repo.update(changeset),
          {:ok, _canceled_subscription} <- stripe().cancel(stripe_subscription_id) do
       :ok
     else

@@ -9,16 +9,15 @@ use Mix.Config
 
 config :sponsors,
   ecto_repos: [Sponsors.Repo],
-  subscription_plan: "",
-  stripe_module: Sponsors.Stripe
+  subscription_plan: System.get_env("STRIPE_PLAN"),
+  stripe_module: Sponsors.Stripe,
+  subscription_module: Sponsors.Subscriptions
 
 # Configures the endpoint
 config :sponsors, SponsorsWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "2LPO+CQyfjtZ4/a65vUBXlmjzR1ZpoAHhJl322u/PkrjuFagAzHoJOmbGYHLuzL7",
-  render_errors: [view: SponsorsWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Sponsors.PubSub, adapter: Phoenix.PubSub.PG2],
-  live_view: [signing_salt: "9vTKcTFZ"]
+  render_errors: [view: SponsorsWeb.ErrorView, accepts: ~w(json)]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -27,6 +26,12 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :sponsors, Sponsors.Guardian,
+  issuer: "system76",
+  secret_key: System.get_env("JWT_SECRET_KEY", "averysecretsecret")
+
+config :stripity_stripe, api_key: System.get_env("STRIPE_SECRET_KEY")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

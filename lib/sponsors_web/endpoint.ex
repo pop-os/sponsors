@@ -21,7 +21,6 @@ defmodule SponsorsWeb.Endpoint do
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
-    body_reader: {SponsorsWeb.CacheBodyReader, :read_body, []},
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 

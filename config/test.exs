@@ -18,4 +18,5 @@ config :sponsors, SponsorsWeb.Endpoint,
 config :logger, level: :warn
 
 config :sponsors,
-  stripe_module: Sponsors.StripeMock
+  stripe_module: Sponsors.StripeMock,
+  subscription_module: Sponsors.SubscriptionsMock
