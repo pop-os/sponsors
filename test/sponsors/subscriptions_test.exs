@@ -2,8 +2,10 @@ defmodule Sponsors.SubscriptionsTest do
   use Sponsors.DataCase
 
   import Mox
+  import Sponsors.Factory
 
-  alias Sponsors.Subscriptions
+  alias Sponsors.{Repo, Subscriptions}
+  alias Sponsors.Schemas.Subscription
 
   setup :verify_on_exit!
 
@@ -17,6 +19,19 @@ defmodule Sponsors.SubscriptionsTest do
 
       assert {:ok, %{stripe_subscription_id: ^expected_subscription_id}} =
                Subscriptions.create("afakestripecustomer", "acustomerid")
+    end
+  end
+
+  describe "cancel/1" do
+    test "returns :ok upon successful cancelation" do
+      %{id: id, stripe_subscription_id: stripe_subscription_id} = insert(:subscription)
+
+      expect(Sponsors.StripeMock, :cancel, fn ^stripe_subscription_id ->
+        {:ok, :ignored}
+      end)
+
+      assert :ok = Subscriptions.cancel(id)
+      assert %{canceled: true, stripe_subscription_id: ^stripe_subscription_id} = Repo.get(Subscription, id)
     end
   end
 end

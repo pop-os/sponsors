@@ -2,7 +2,9 @@ defmodule Sponsors.Stripe do
   @moduledoc """
   The business logic for interacting with Stripe in order to subscribe customers to a plan
   """
-  @callback subscribe(String.t()) :: {:ok, String.t()} | {:error, atom() | any()}
+
+  @callback cancel(integer()) :: :ok | {:error, String.t()}
+  @callback subscribe(String.t()) :: {:ok, String.t()} | {:error, atom()}
 
   def cancel(id), do: Stripe.Subscription.delete(id)
 
