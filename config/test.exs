@@ -20,3 +20,5 @@ config :logger, level: :warn
 config :sponsors,
   stripe_module: Sponsors.StripeMock,
   subscription_module: Sponsors.SubscriptionsMock
+
+config :sponsors, Sponsors.Mailer, adapter: Bamboo.TestAdapter
