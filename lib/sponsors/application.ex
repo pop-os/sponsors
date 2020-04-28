@@ -16,6 +16,13 @@ defmodule Sponsors.Application do
       # {Sponsors.Worker, arg},
     ]
 
+    :telemetry.attach(
+      "appsignal-ecto",
+      [:sponsors, :repo, :query],
+      &Appsignal.Ecto.handle_event/4,
+      nil
+    )
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Sponsors.Supervisor]

@@ -33,9 +33,11 @@ defmodule Sponsors.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:appsignal, "~> 1.13"},
+      {:bamboo, "~> 1.4"},
       {:ecto_sql, "~> 3.1"},
       {:guardian, "~> 2.1"},
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.2", override: true},
       {:phoenix, "~> 1.5"},
       {:phoenix_ecto, "~> 4.0"},
       {:plug_cowboy, "~> 2.0"},
