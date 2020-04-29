@@ -18,6 +18,6 @@ defmodule SponsorsWeb.Router do
   scope "/", SponsorsWeb do
     pipe_through [:api, :auth]
 
-    resources "/subscriptions", SubscriptionController, only: [:create, :delete]
+    resources "/subscriptions", SubscriptionController, only: [:create, :delete, :index]
   end
 end

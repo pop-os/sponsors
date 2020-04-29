@@ -6,6 +6,14 @@ defmodule SponsorsWeb.SubscriptionController do
 
   action_fallback SponsorsWeb.FallbackController
 
+  def index(conn, _params) do
+    with %{"sub" => internal_customer_id} <- Guardian.Plug.current_claims(conn) do
+      subscriptions = subscriptions().all(internal_customer_id)
+
+      render(conn, "index.json", subscriptions: subscriptions)
+    end
+  end
+
   @doc """
   New subscriptions require a valid JWT from the authentication system and 
   a JSON payload that includes our "stripe_customer_id".

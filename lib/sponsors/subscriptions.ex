@@ -3,11 +3,26 @@ defmodule Sponsors.Subscriptions do
   A collection of functions encapsulating the business logic for subscriptions
   """
 
+  import Ecto.Query
+
   alias Sponsors.Schemas.Subscription
   alias Sponsors.Repo
 
+  @callback all(String.t()) :: [Subscription.t()]
   @callback cancel(String.t()) :: :ok | {:error, :subscription_cancelation_failed | :subscription_not_found}
   @callback create(String.t(), String.t()) :: {:ok, Subscription.t()} | {:error, Ecto.Changeset.t()}
+
+  @doc """
+  Find existing subscriptions for a customer if it exists
+  """
+  def all(customer_id) do
+    query =
+      from s in Subscription,
+        where: is_nil(s.canceled_at),
+        where: s.customer_id == ^customer_id
+
+    Repo.all(query)
+  end
 
   @doc """
   Create a Stripe subscription and persist it to our database
