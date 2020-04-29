@@ -15,6 +15,7 @@ defmodule Sponsors.Factory do
     %Subscription{
       customer_id: sequence(:customer_id, &"1234#{&1}"),
       expires_at: DateTime.utc_now(),
+      stripe_source_id: sequence(:source_id, &"card_H8gD56NJYhAf#{&1}"),
       stripe_subscription_id: sequence(:subscription_id, &"sub_H8gD56NJYhAf#{&1}")
     }
   end

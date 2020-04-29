@@ -11,13 +11,13 @@ defmodule SponsorsWeb.SubscriptionView do
 
   def render("subscription.json", %{subscription: subscription}) do
     %{
-      id: subscription.id,
       canceled_at: to_timestamp(subscription.canceled_at),
-      expires_at: to_timestamp(subscription.canceled_at),
-      inserted_at: to_timestamp(subscription.canceled_at)
+      expires_at: to_timestamp(subscription.expires_at),
+      id: subscription.id,
+      inserted_at: to_timestamp(subscription.inserted_at),
+      stripe_source_id: subscription.stripe_source_id,
+      stripe_subscription_id: subscription.stripe_subscription_id
     }
-
-    Map.take(subscription, [:id, :canceled_at, :expires_at, :inserted_at])
   end
 
   defp to_timestamp(nil), do: nil

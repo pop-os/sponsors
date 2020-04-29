@@ -17,7 +17,7 @@ defmodule Sponsors.Schemas.Invoice do
 
     belongs_to :subscription, Subscription
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   def changeset(subscription, params) do
