@@ -10,7 +10,7 @@ defmodule Sponsors.Subscriptions do
 
   @callback all(String.t()) :: [Subscription.t()]
   @callback cancel(String.t()) :: :ok | {:error, :subscription_cancelation_failed | :subscription_not_found}
-  @callback create(String.t(), String.t()) :: {:ok, Subscription.t()} | {:error, Ecto.Changeset.t()}
+  @callback create(String.t(), String.t(), String.t() | nil) :: {:ok, Subscription.t()} | {:error, Ecto.Changeset.t()}
 
   @doc """
   Find existing subscriptions for a customer if it exists
@@ -27,11 +27,12 @@ defmodule Sponsors.Subscriptions do
   @doc """
   Create a Stripe subscription and persist it to our database
   """
-  def create(stripe_customer_id, internal_customer_id) do
-    with {:ok, subscription} <- stripe().subscribe(stripe_customer_id) do
+  def create(stripe_customer_id, internal_customer_id, source) do
+    with {:ok, subscription} <- stripe().subscribe(stripe_customer_id, source) do
       params = %{
         customer_id: internal_customer_id,
         expires_at: DateTime.from_unix!(subscription.current_period_end),
+        stripe_source_id: source,
         stripe_subscription_id: subscription.id
       }
 

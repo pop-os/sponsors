@@ -4,13 +4,14 @@ defmodule Sponsors.Stripe do
   """
 
   @callback cancel(integer()) :: :ok | {:error, String.t()}
-  @callback subscribe(String.t()) :: {:ok, Stripe.Subscription.t()} | {:error, atom()}
+  @callback subscribe(String.t(), String.t() | nil) :: {:ok, Stripe.Subscription.t()} | {:error, atom()}
 
   def cancel(id), do: Stripe.Subscription.delete(id)
 
-  def subscribe(stripe_customer_id) do
+  def subscribe(stripe_customer_id, source \\ nil) do
     params = %{
       customer: stripe_customer_id,
+      default_payment_method: source,
       items: [%{plan: subscription_plan()}]
     }
 

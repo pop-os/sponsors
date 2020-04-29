@@ -18,9 +18,10 @@ defmodule SponsorsWeb.SubscriptionController do
   New subscriptions require a valid JWT from the authentication system and 
   a JSON payload that includes our "stripe_customer_id".
   """
-  def create(conn, %{"stripe_customer_id" => stripe_customer_id}) do
+  def create(conn, %{"stripe_customer_id" => stripe_customer_id} = params) do
     with %{"sub" => internal_customer_id} <- Guardian.Plug.current_claims(conn),
-         {:ok, subscription} <- subscriptions().create(stripe_customer_id, internal_customer_id) do
+         alt_source = Map.get(params, "stripe_source_id"),
+         {:ok, subscription} <- subscriptions().create(stripe_customer_id, internal_customer_id, alt_source) do
       conn
       |> put_status(201)
       |> render("show.json", subscription: subscription)

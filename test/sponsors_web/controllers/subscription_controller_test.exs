@@ -4,7 +4,6 @@ defmodule SponsorsWeb.SubscriptionControllerTest do
   import Mox
   import Sponsors.Factory
 
-  alias Sponsors.Schemas.Subscription
   alias SponsorsWeb.AuthHelpers
 
   setup :verify_on_exit!
@@ -29,18 +28,18 @@ defmodule SponsorsWeb.SubscriptionControllerTest do
   describe "create/2" do
     test "returns a 201 and our subscription resource", %{conn: conn} do
       internal_customer_id = "acustomer"
+      expected_source = "card_expectedsource"
 
-      timestamp = DateTime.to_unix(DateTime.utc_now())
-
-      expect(Sponsors.SubscriptionsMock, :create, fn _stripe_customer, _internal_customer_id ->
-        {:ok, %Subscription{canceled_at: nil, expires_at: timestamp, id: 1, inserted_at: timestamp}}
+      expect(Sponsors.SubscriptionsMock, :create, fn _stripe_customer, internal_customer_id, ^expected_source ->
+        {:ok, insert(:subscription, customer_id: internal_customer_id, stripe_source_id: expected_source)}
       end)
 
       body = %{
-        stripe_customer_id: "astripecustomer"
+        stripe_customer_id: "astripecustomer",
+        stripe_source_id: expected_source
       }
 
-      assert %{"id" => 1, "canceled_at" => nil, "expires_at" => ^timestamp, "inserted_at" => ^timestamp} =
+      assert %{"stripe_source_id" => ^expected_source} =
                conn
                |> AuthHelpers.login(internal_customer_id)
                |> put_req_header("content-type", "application/json")
@@ -72,7 +71,7 @@ defmodule SponsorsWeb.SubscriptionControllerTest do
     end
 
     test "returns a 402 Payment Required when payment fails", %{conn: conn} do
-      expect(Sponsors.SubscriptionsMock, :create, fn _stripe_customer, _internal_customer_id ->
+      expect(Sponsors.SubscriptionsMock, :create, fn _stripe_customer, _internal_customer_id, _source ->
         {:error, :stripe_payment_failed}
       end)
 
