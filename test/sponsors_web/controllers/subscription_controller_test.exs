@@ -9,6 +9,23 @@ defmodule SponsorsWeb.SubscriptionControllerTest do
 
   setup :verify_on_exit!
 
+  describe "index/2" do
+    test "returns the logged in user's subscriptions", %{conn: conn} do
+      %{customer_id: internal_customer_id, id: subscription_id} = subscription = insert(:subscription)
+
+      expect(Sponsors.SubscriptionsMock, :all, fn ^internal_customer_id ->
+        [subscription]
+      end)
+
+      assert [%{"id" => ^subscription_id}] =
+               conn
+               |> AuthHelpers.login(internal_customer_id)
+               |> put_req_header("content-type", "application/json")
+               |> get("/subscriptions")
+               |> json_response(200)
+    end
+  end
+
   describe "create/2" do
     test "returns a 201 and our subscription resource", %{conn: conn} do
       internal_customer_id = "acustomer"

@@ -9,6 +9,14 @@ defmodule Sponsors.SubscriptionsTest do
 
   setup :verify_on_exit!
 
+  describe "all/1" do
+    test "returns a customer's subscriptions" do
+      %{customer_id: customer_id, id: subscription_id} = insert(:subscription)
+
+      assert [%{id: ^subscription_id}] = Subscriptions.all(customer_id)
+    end
+  end
+
   describe "create/2" do
     test "returns a new subscription" do
       expected_subscription_id = "sub_ABCDExpected"

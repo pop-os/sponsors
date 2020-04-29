@@ -1,6 +1,10 @@
 defmodule SponsorsWeb.SubscriptionView do
   use SponsorsWeb, :view
 
+  def render("index.json", %{subscriptions: subscriptions}) do
+    render_many(subscriptions, __MODULE__, "subscription.json")
+  end
+
   def render("show.json", %{subscription: subscription}) do
     render_one(subscription, __MODULE__, "subscription.json")
   end
@@ -17,5 +21,5 @@ defmodule SponsorsWeb.SubscriptionView do
   end
 
   defp to_timestamp(nil), do: nil
-  defp to_timestamp(dt), do: DateTime.to_unix!(dt)
+  defp to_timestamp(dt), do: DateTime.to_unix(dt)
 end
