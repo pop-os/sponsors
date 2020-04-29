@@ -14,7 +14,8 @@ defmodule Sponsors.SubscriptionsTest do
       expected_subscription_id = "sub_ABCDExpected"
 
       expect(Sponsors.StripeMock, :subscribe, fn _stripe_customer ->
-        {:ok, expected_subscription_id}
+        timestamp = DateTime.to_unix(DateTime.utc_now())
+        {:ok, %{current_period_end: timestamp, id: expected_subscription_id}}
       end)
 
       assert {:ok, %{stripe_subscription_id: ^expected_subscription_id}} =
@@ -31,7 +32,7 @@ defmodule Sponsors.SubscriptionsTest do
       end)
 
       assert :ok = Subscriptions.cancel(id)
-      assert %{canceled: true, stripe_subscription_id: ^stripe_subscription_id} = Repo.get(Subscription, id)
+      assert %{canceled_at: _, stripe_subscription_id: ^stripe_subscription_id} = Repo.get(Subscription, id)
     end
   end
 end

@@ -13,8 +13,8 @@ defmodule Sponsors.Factory do
 
   def subscription_factory do
     %Subscription{
-      canceled: false,
       customer_id: sequence(:customer_id, &"1234#{&1}"),
+      expires_at: DateTime.utc_now(),
       stripe_subscription_id: sequence(:subscription_id, &"sub_H8gD56NJYhAf#{&1}")
     }
   end

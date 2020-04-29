@@ -25,7 +25,7 @@ defmodule Sponsors.StripeTest do
         Plug.Conn.send_resp(conn, 200, resp)
       end)
 
-      assert {:ok, ^expected_subscription_id} = Stripe.subscribe("afakestripecustomer")
+      assert {:ok, %{id: ^expected_subscription_id}} = Stripe.subscribe("afakestripecustomer")
     end
 
     test "returns an incomplete subscription on payment fail", %{bypass: bypass} do
