@@ -1,5 +1,7 @@
 import Config
 
+config :sponsors, SponsorsWeb.Endpoint, secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
+
 database_config =
   "DB_SECRETS"
   |> System.fetch_env!()
