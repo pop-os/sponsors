@@ -35,6 +35,7 @@ defmodule Sponsors.MixProject do
     [
       {:appsignal, "~> 1.13"},
       {:bamboo, "~> 1.4"},
+      {:cors_plug, "~> 2.0"},
       {:ecto_sql, "~> 3.1"},
       {:guardian, "~> 2.1"},
       {:jason, "~> 1.2", override: true},
