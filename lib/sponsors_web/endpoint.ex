@@ -28,6 +28,7 @@ defmodule SponsorsWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
+  plug CORSPlug, headers: ["*"], origin: ["*"]
   plug Plug.Session, @session_options
   plug SponsorsWeb.Router
 end
