@@ -7,15 +7,18 @@ defmodule Sponsors.Subscriptions do
   alias Sponsors.Repo
 
   @callback cancel(String.t()) :: :ok | {:error, :subscription_cancelation_failed | :subscription_not_found}
-
   @callback create(String.t(), String.t()) :: {:ok, Subscription.t()} | {:error, Ecto.Changeset.t()}
 
   @doc """
   Create a Stripe subscription and persist it to our database
   """
   def create(stripe_customer_id, internal_customer_id) do
-    with {:ok, stripe_subscription_id} <- stripe().subscribe(stripe_customer_id) do
-      params = %{customer_id: internal_customer_id, stripe_subscription_id: stripe_subscription_id}
+    with {:ok, subscription} <- stripe().subscribe(stripe_customer_id) do
+      params = %{
+        customer_id: internal_customer_id,
+        expires_at: DateTime.from_unix!(subscription.current_period_end),
+        stripe_subscription_id: subscription.id
+      }
 
       %Subscription{}
       |> Subscription.changeset(params)

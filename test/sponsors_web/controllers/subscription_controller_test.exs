@@ -13,15 +13,17 @@ defmodule SponsorsWeb.SubscriptionControllerTest do
     test "returns a 201 and our subscription resource", %{conn: conn} do
       internal_customer_id = "acustomer"
 
+      timestamp = DateTime.to_unix(DateTime.utc_now())
+
       expect(Sponsors.SubscriptionsMock, :create, fn _stripe_customer, _internal_customer_id ->
-        {:ok, %Subscription{id: 1, customer_id: internal_customer_id}}
+        {:ok, %Subscription{canceled_at: nil, expires_at: timestamp, id: 1, inserted_at: timestamp}}
       end)
 
       body = %{
         stripe_customer_id: "astripecustomer"
       }
 
-      assert %{"id" => 1, "customer_id" => ^internal_customer_id} =
+      assert %{"id" => 1, "canceled_at" => nil, "expires_at" => ^timestamp, "inserted_at" => ^timestamp} =
                conn
                |> AuthHelpers.login(internal_customer_id)
                |> put_req_header("content-type", "application/json")

@@ -4,7 +4,7 @@ defmodule Sponsors.Stripe do
   """
 
   @callback cancel(integer()) :: :ok | {:error, String.t()}
-  @callback subscribe(String.t()) :: {:ok, String.t()} | {:error, atom()}
+  @callback subscribe(String.t()) :: {:ok, Stripe.Subscription.t()} | {:error, atom()}
 
   def cancel(id), do: Stripe.Subscription.delete(id)
 
@@ -15,9 +15,14 @@ defmodule Sponsors.Stripe do
     }
 
     case Stripe.Subscription.create(params) do
-      {:ok, %{id: stripe_subscription_id, status: "active"}} -> {:ok, stripe_subscription_id}
-      {:ok, %{status: "incomplete"}} -> {:error, :stripe_payment_failed}
-      {:error, _errors} -> {:error, :stripe_error}
+      {:ok, %{status: "active"} = subscription} ->
+        {:ok, subscription}
+
+      {:ok, %{status: "incomplete"}} ->
+        {:error, :stripe_payment_failed}
+
+      {:error, _errors} ->
+        {:error, :stripe_error}
     end
   end
 

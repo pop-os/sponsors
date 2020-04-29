@@ -8,17 +8,21 @@ defmodule Sponsors.Schemas.Subscription do
 
   alias Sponsors.Schemas.Invoice
 
+  @primary_key {:id, :binary_id, autogenerate: true}
+
   @type t :: %{
-          canceled: boolean(),
+          canceled_at: DateTime.utc(),
           customer_id: String.t(),
+          expires_at: DateTime.t(),
           inserted_at: DateTime.t(),
           stripe_subscription_id: String.t(),
           updated_at: DateTime.t()
         }
 
   schema "subscriptions" do
-    field :canceled, :boolean
+    field :canceled_at, :utc_datetime
     field :customer_id, :string
+    field :expires_at, :utc_datetime
     field :stripe_subscription_id, :string
 
     has_many :invoices, Invoice
@@ -28,8 +32,8 @@ defmodule Sponsors.Schemas.Subscription do
 
   def changeset(subscription, params) do
     subscription
-    |> cast(params, [:canceled, :customer_id, :stripe_subscription_id])
-    |> validate_required([:customer_id, :stripe_subscription_id])
+    |> cast(params, [:canceled_at, :customer_id, :expires_at, :stripe_subscription_id])
+    |> validate_required([:customer_id, :expires_at, :stripe_subscription_id])
     |> unique_constraint(:stripe_subscription_id)
   end
 end

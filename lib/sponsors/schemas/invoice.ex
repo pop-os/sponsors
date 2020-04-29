@@ -8,6 +8,9 @@ defmodule Sponsors.Schemas.Invoice do
 
   alias Sponsors.Schemas.Subscription
 
+  @foreign_key_type :binary_id
+  @primary_key {:id, :binary_id, autogenerate: true}
+
   schema "invoices" do
     field :paid, :boolean
     field :stripe_invoice_id, :string
