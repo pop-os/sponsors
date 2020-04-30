@@ -21,4 +21,4 @@ config :logger, level: :info
 
 config :sponsors, Sponsors.Mailer,
   adapter: Bamboo.MailgunAdapter,
-  domain: "system76"
+  domain: "system76.com"
