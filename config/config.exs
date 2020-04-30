@@ -42,6 +42,8 @@ config :appsignal, :config,
 
 config :sponsors, Sponsors.Mailer, adapter: Bamboo.LocalAdapter
 
+config :sponsors, slack_webhook: nil
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

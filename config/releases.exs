@@ -47,3 +47,11 @@ config :appsignal, :config,
   active: appsignal_config["active"],
   push_api_key: appsignal_config["push_api_key"],
   env: appsignal_config["env"]
+
+slack_secrets =
+  "SLACK_SECRETS"
+  |> System.get_env("{}")
+  |> Jason.decode!()
+
+config :sponsors,
+  slack_webhook: Map.get(slack_secrets, "subscriptions_webhook_url", nil)
