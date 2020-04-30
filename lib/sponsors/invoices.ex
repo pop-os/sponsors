@@ -37,6 +37,10 @@ defmodule Sponsors.Invoices do
     |> Repo.update()
   end
 
+  defp first_name(nil) do
+    "Pop!_OS Supporter"
+  end
+
   defp first_name(name) do
     name
     |> String.split(" ", parts: 2)
