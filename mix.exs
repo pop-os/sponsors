@@ -38,6 +38,7 @@ defmodule Sponsors.MixProject do
       {:cors_plug, "~> 2.0"},
       {:ecto_sql, "~> 3.1"},
       {:guardian, "~> 2.1"},
+      {:httpoison, "~> 1.6"},
       {:jason, "~> 1.2", override: true},
       {:phoenix, "~> 1.5"},
       {:phoenix_ecto, "~> 4.0"},

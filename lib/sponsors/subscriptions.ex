@@ -6,7 +6,7 @@ defmodule Sponsors.Subscriptions do
   import Ecto.Query
 
   alias Sponsors.Schemas.Subscription
-  alias Sponsors.Repo
+  alias Sponsors.{Repo, Slack}
 
   @callback all(String.t()) :: [Subscription.t()]
   @callback cancel(String.t()) :: :ok | {:error, :subscription_cancelation_failed | :subscription_not_found}
@@ -39,6 +39,7 @@ defmodule Sponsors.Subscriptions do
       %Subscription{}
       |> Subscription.changeset(params)
       |> Repo.insert()
+      |> notify_slack()
     end
   end
 
@@ -55,6 +56,16 @@ defmodule Sponsors.Subscriptions do
       nil -> {:error, :subscription_not_found}
       _error -> {:error, :subscription_cancelation_failed}
     end
+  end
+
+  defp notify_slack({:ok, subscription}) do
+    Task.start(Slack, :send_notification, [])
+
+    {:ok, subscription}
+  end
+
+  defp notify_slack(err) do
+    err
   end
 
   defp stripe, do: Application.get_env(:sponsors, :stripe_module)
