@@ -38,7 +38,25 @@ config :stripity_stripe, api_key: "stripe_secret_key"
 config :appsignal, :config,
   active: false,
   name: "Sponsors",
-  env: Mix.env()
+  env: Mix.env(),
+  ignore_actions: ["SponsorsWeb.HealthCheckController#health_check"],
+  request_headers: [
+    "accept",
+    "accept-charset",
+    "accept-encoding",
+    "accept-language",
+    "cache-control",
+    "connection",
+    "content-length",
+    "path-info",
+    "range",
+    "request-method",
+    "request-uri",
+    "server-name",
+    "server-port",
+    "server-protocol",
+    "user-agent"
+  ]
 
 config :sponsors, Sponsors.Mailer, adapter: Bamboo.LocalAdapter
 
