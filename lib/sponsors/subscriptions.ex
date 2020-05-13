@@ -48,7 +48,7 @@ defmodule Sponsors.Subscriptions do
   """
   def cancel(id) do
     with %{stripe_subscription_id: stripe_subscription_id} = subscription <- Repo.get(Subscription, id),
-         changeset = Subscription.changeset(subscription, %{canceled: true}),
+         changeset = Subscription.changeset(subscription, %{canceled_at: DateTime.utc_now()}),
          {:ok, _deleted_subscription} <- Repo.update(changeset),
          {:ok, _canceled_subscription} <- stripe().cancel(stripe_subscription_id) do
       :ok

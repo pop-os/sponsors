@@ -40,7 +40,8 @@ defmodule Sponsors.SubscriptionsTest do
       end)
 
       assert :ok = Subscriptions.cancel(id)
-      assert %{canceled_at: _, stripe_subscription_id: ^stripe_subscription_id} = Repo.get(Subscription, id)
+      assert %{canceled_at: canceled_at, stripe_subscription_id: ^stripe_subscription_id} = Repo.get(Subscription, id)
+      refute is_nil(canceled_at)
     end
   end
 end
