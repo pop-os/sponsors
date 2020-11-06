@@ -5,8 +5,6 @@ config =
   |> System.fetch_env!()
   |> Jason.decode!()
 
-IO.inspect(config, label: "config")
-
 config :sponsors, SponsorsWeb.Endpoint, secret_key_base: config["SECRET_KEY_BASE"]
 
 config :sponsors, Sponsors.Repo,
