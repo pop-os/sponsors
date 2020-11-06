@@ -37,7 +37,6 @@ jobs:
         run: |
           docker build \
             --build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
-            --build-arg DEPLOY_ENV=production \
             --build-arg VCS_REF=$IMAGE_TAG \
             --build-arg VERSION=$IMAGE_TAG \
             --tag $ECR_REPOSITORY:$IMAGE_TAG \
