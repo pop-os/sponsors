@@ -69,6 +69,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.template.outputs.task-definition }}
-          service: so-dod-sponsors
+          service: staging-so-dod-sponsors
           cluster: so-dod-us-east-2
           wait-for-service-stability: true

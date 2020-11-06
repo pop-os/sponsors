@@ -68,6 +68,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.template.outputs.task-definition }}
-          service: pop-os-sponsors
+          service: production-pop-os-sponsors
           cluster: pop-os-us-east-2
           wait-for-service-stability: true
