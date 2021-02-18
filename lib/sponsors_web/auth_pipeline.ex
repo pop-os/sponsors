@@ -6,4 +6,5 @@ defmodule SponsorsWeb.AuthPipeline do
 
   plug Guardian.Plug.VerifyHeader, claims: %{"iss" => "system76", "typ" => "access"}
   plug Guardian.Plug.EnsureAuthenticated
+  plug Guardian.Plug.LoadResource, allow_blank: true
 end
