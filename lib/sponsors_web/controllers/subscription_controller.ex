@@ -7,7 +7,7 @@ defmodule SponsorsWeb.SubscriptionController do
   action_fallback SponsorsWeb.FallbackController
 
   def index(conn, _params) do
-    user_id = Guardian.Plug.current_resource(conn)
+    internal_customer_id = Guardian.Plug.current_resource(conn)
     subscriptions = subscriptions().all(internal_customer_id)
     render(conn, "index.json", subscriptions: subscriptions)
   end
@@ -17,7 +17,7 @@ defmodule SponsorsWeb.SubscriptionController do
   a JSON payload that includes our "stripe_customer_id".
   """
   def create(conn, %{"stripe_customer_id" => stripe_customer_id} = params) do
-    with user_id when not is_nil(user_id) = Guardian.Plug.current_resource(conn),
+    with internal_customer_id when not is_nil(internal_customer_id) <- Guardian.Plug.current_resource(conn),
          alt_source = Map.get(params, "stripe_source_id"),
          {:ok, subscription} <- subscriptions().create(stripe_customer_id, internal_customer_id, alt_source) do
       conn
