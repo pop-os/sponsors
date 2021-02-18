@@ -16,12 +16,12 @@ defmodule SponsorsWeb.AuthHelpers do
 
   We use `Guardian.Token.Jwt.create_token/2` directly rather than `encode_and_sign/2`
   since we don't implement, nor want to implement soley for testing, the Guardian callbacks
-  used to encode resource's struct and load the subject from storage. 
+  used to encode resource's struct and load the subject from storage.
 
   Neither functions are performed by this service.
   """
   def login(conn, customer_id, claim_overrides \\ %{}) do
-    claims = Map.merge(%{"iss" => "system76", "sub" => customer_id, "typ" => "access"}, claim_overrides)
+    claims = Map.merge(%{"iss" => "system76", "sub" => "user:" <> customer_id, "typ" => "access"}, claim_overrides)
 
     {:ok, token} = Guardian.Token.Jwt.create_token(Sponsors.Guardian, claims)
 
