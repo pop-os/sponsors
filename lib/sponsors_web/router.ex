@@ -9,14 +9,10 @@ defmodule SponsorsWeb.Router do
     plug SponsorsWeb.AuthPipeline
   end
 
-  scope "/", SponsorsWeb do
+  scope "/webhooks", SponsorsWeb.Webhooks do
     pipe_through :api
 
-    get "/health_check", HealthCheckController, :health_check
-
-    scope "/webhooks", Webhooks do
-      post "/stripe", StripeController, :create
-    end
+    post "/stripe", StripeController, :create
   end
 
   scope "/", SponsorsWeb do

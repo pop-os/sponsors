@@ -11,14 +11,19 @@ defmodule SponsorsWeb.Endpoint do
     signing_salt: "Q3dlFHYr"
   ]
 
+  plug SponsorsWeb.HealthcheckPlug
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
     plug Phoenix.CodeReloader
   end
 
-  plug Plug.RequestId
+  plug Bottle.RequestIdPlug
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
+
+  plug LoggerJSON.Plug,
+    metadata_formatter: LoggerJSON.Plug.MetadataFormatters.DatadogLogger
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
@@ -30,5 +35,6 @@ defmodule SponsorsWeb.Endpoint do
   plug Plug.Head
   plug CORSPlug, headers: ["*"], origin: ["*"]
   plug Plug.Session, @session_options
+
   plug SponsorsWeb.Router
 end

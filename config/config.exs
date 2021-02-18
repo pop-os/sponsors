@@ -18,13 +18,16 @@ config :sponsors,
 config :sponsors, SponsorsWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "2LPO+CQyfjtZ4/a65vUBXlmjzR1ZpoAHhJl322u/PkrjuFagAzHoJOmbGYHLuzL7",
-  render_errors: [view: SponsorsWeb.ErrorView, accepts: ~w(json)],
-  instrumenters: [Appsignal.Phoenix.Instrumenter]
+  render_errors: [view: SponsorsWeb.ErrorView, accepts: ~w(json)]
 
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+  metadata: [:request_id, :user_id, :trace_id, :span_id]
+
+config :logger_json, :backend,
+  formatter: LoggerJSON.Formatters.DatadogLogger,
+  metadata: :all
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
@@ -38,25 +41,27 @@ config :stripity_stripe, api_key: "stripe_secret_key"
 config :appsignal, :config,
   active: false,
   name: "Sponsors",
-  env: Mix.env(),
-  ignore_actions: ["SponsorsWeb.HealthCheckController#health_check"],
-  request_headers: [
-    "accept",
-    "accept-charset",
-    "accept-encoding",
-    "accept-language",
-    "cache-control",
-    "connection",
-    "content-length",
-    "path-info",
-    "range",
-    "request-method",
-    "request-uri",
-    "server-name",
-    "server-port",
-    "server-protocol",
-    "user-agent"
+  ignore_errors: [
+    "Ecto.NoResultsError",
+    "Phoenix.MissingParamError",
+    "Phoenix.Router.NoRouteError"
   ]
+
+config :sponsors, Sponsors.Tracer,
+  service: :sponsors,
+  adapter: SpandexDatadog.Adapter,
+  disabled?: true
+
+config :sponsors, SpandexDatadog.ApiServer,
+  http: HTTPoison,
+  host: "127.0.0.1"
+
+config :spandex_ecto, SpandexEcto.EctoLogger,
+  service: :sponsors,
+  tracer: Sponsors.Tracer
+
+config :spandex_phoenix, tracer: Sponsors.Tracer
+config :spandex, :decorators, tracer: Sponsors.Tracer
 
 config :sponsors, Sponsors.Mailer, adapter: Bamboo.LocalAdapter
 

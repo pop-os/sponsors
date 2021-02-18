@@ -24,9 +24,10 @@ config :stripity_stripe, api_key: config["STRIPE_SECRET_KEY"]
 config :sponsors, Sponsors.Guardian, secret_key: config["JWT_SECRET_KEY"]
 
 config :appsignal, :config,
-  active: Map.get(config, "APPSIGNAL_ENABLED", false),
-  push_api_key: config["APPSIGNAL_PUSH_KEY"],
-  env: config["APPSIGNAL_ENV"]
+  push_api_key: config["APPSIGNAL_KEY"],
+  env: config["ENVIRONMENT"]
+
+config :samwise, Samwise.Tracer, env: config["ENVIRONMENT"]
 
 config :sponsors,
   slack_webhook: Map.get(config, "SLACK_WEBHOOK", nil)
