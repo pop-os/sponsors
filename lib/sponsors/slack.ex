@@ -3,6 +3,11 @@ defmodule Sponsors.Slack do
   Send a message to Slack whenever someone subscribes
   """
 
+  use Appsignal.Instrumentation.Decorators
+  use Spandex.Decorators
+
+  @decorate transaction(:slack)
+  @decorate span(service: :slack, type: :web)
   def send_notification do
     body = %{
       channel: "#subscriptions",

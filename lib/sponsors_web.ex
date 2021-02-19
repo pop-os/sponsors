@@ -32,6 +32,8 @@ defmodule SponsorsWeb do
         root: "lib/sponsors_web/templates",
         namespace: SponsorsWeb
 
+      use Appsignal.Phoenix.View
+
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
 

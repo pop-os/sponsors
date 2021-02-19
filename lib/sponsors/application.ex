@@ -6,10 +6,15 @@ defmodule Sponsors.Application do
   use Application
 
   def start(_type, _args) do
+    SpandexPhoenix.Telemetry.install()
+
     # List all child processes to be supervised
     children = [
+      {SpandexDatadog.ApiServer, Application.get_env(:sponsors, SpandexDatadog.ApiServer)},
       # Start the Ecto repository
       Sponsors.Repo,
+      # Start the Telemetry application
+      SponsorsWeb.Telemetry,
       # Start the endpoint when the application starts
       SponsorsWeb.Endpoint
       # Starts a worker by calling: Sponsors.Worker.start_link(arg)

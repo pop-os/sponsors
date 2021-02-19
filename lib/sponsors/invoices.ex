@@ -15,7 +15,7 @@ defmodule Sponsors.Invoices do
 
       email
       |> Email.thank_you(name)
-      |> Mailer.deliver_now()
+      |> Mailer.send()
 
       {:ok, invoice}
     end

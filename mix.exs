@@ -33,23 +33,33 @@ defmodule Sponsors.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:appsignal, "~> 1.13"},
+      {:appsignal_phoenix, "~> 2.0.4"},
       {:bamboo, "~> 1.4"},
+      {:bottle, github: "system76/bottle", ref: "1621c66"},
+      {:bypass, "~> 1.0", only: :test},
       {:cors_plug, "~> 2.0"},
+      {:cowboy, "~> 2.8", override: true},
+      {:cowlib, "~> 2.9.1", override: true},
+      {:credo, "~> 1.4", only: [:dev, :test]},
+      {:decorator, "~> 1.2"},
       {:ecto_sql, "~> 3.1"},
+      {:ex_machina, "~> 2.4", only: :test},
       {:guardian, "~> 2.1"},
-      {:httpoison, "~> 1.6"},
+      {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2", override: true},
-      {:phoenix, "~> 1.5"},
+      {:logger_json, github: "Nebo15/logger_json", ref: "8e4290a"},
+      {:mox, "~> 0.5", only: :test},
       {:phoenix_ecto, "~> 4.0"},
+      {:phoenix, "~> 1.5"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
+      {:spandex_datadog, "~> 1.1.0"},
+      {:spandex_ecto, "~> 0.6.2"},
+      {:spandex_phoenix, "~> 1.0.5"},
+      {:spandex, "~> 3.0.3"},
       {:stripity_stripe, "~> 2.8"},
-      # Dev & Test dependencies
-      {:bypass, "~> 1.0", only: :test},
-      {:credo, "~> 1.4", only: [:dev, :test]},
-      {:ex_machina, "~> 2.4", only: :test},
-      {:mox, "~> 0.5", only: :test}
+      {:telemetry_metrics, "~> 0.4"},
+      {:telemetry_poller, "~> 0.4"}
     ]
   end
 

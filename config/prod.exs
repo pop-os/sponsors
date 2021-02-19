@@ -19,6 +19,18 @@ config :sponsors, SponsorsWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :logger,
+  backends: [LoggerJSON],
+  level: :info
+
+config :sponsors, Sponsors.Repo, log: false
+
+config :phoenix, :logger, false
+
+config :appsignal, :config, active: true
+
+config :sponsors, Sponsors.Tracer, disabled?: false
+
 config :sponsors, Sponsors.Mailer,
   adapter: Bamboo.MailgunAdapter,
   domain: "system76.com"
