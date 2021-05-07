@@ -11,14 +11,20 @@ defmodule Sponsors.Invoices do
          {:ok, invoice} <- record_invoice(stripe_invoice_id, subscription_id, paid),
          {:ok, _subscription} <- update_subscription_expiration(subscription, expires_at),
          {:ok, %{email: email, name: full_name}} <- stripe().customer(stripe_customer_id) do
-      name = first_name(full_name)
-
-      email
-      |> Email.thank_you(name)
-      |> Mailer.send()
-
-      {:ok, invoice}
+      send_thank_you_email(invoice, email, full_name)
     end
+  end
+
+  defp send_thank_you_email(invoice, nil, _), do: {:ok, invoice}
+
+  defp send_thank_you_email(invoice, email, full_name) do
+    name = first_name(full_name)
+
+    email
+    |> Email.thank_you(name)
+    |> Mailer.send()
+
+    {:ok, invoice}
   end
 
   defp get_subscription(stripe_subscription_id),
