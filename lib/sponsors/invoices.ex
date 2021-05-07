@@ -16,6 +16,7 @@ defmodule Sponsors.Invoices do
   end
 
   defp send_thank_you_email(invoice, nil, _), do: {:ok, invoice}
+
   defp send_thank_you_email(invoice, email, full_name) do
     name = first_name(full_name)
 
