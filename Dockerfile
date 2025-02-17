@@ -1,4 +1,4 @@
-FROM elixir:1.10-alpine as build
+FROM elixir:1.15 as build
 
 # Install deps
 RUN set -xe; \
@@ -31,7 +31,7 @@ RUN set -xe; \
     mix deps.compile --all; \
     mix release
 
-FROM alpine:3.9 as release
+FROM debian:12-slim as release
 
 RUN set -xe; \
     apk add --update  --no-cache --virtual .runtime-deps \
