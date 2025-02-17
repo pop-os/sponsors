@@ -1,5 +1,5 @@
 defmodule SponsorsWeb.ErrorView do
-  use SponsorsWeb, :view
+  use Phoenix.Controller  # ✅ Phoenix 1.7에서는 View 대신 Controller 사용
 
   def render("400.json", _assigns) do
     %{errors: %{detail: "Bad Request"}}

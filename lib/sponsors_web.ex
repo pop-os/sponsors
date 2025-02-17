@@ -56,6 +56,18 @@ defmodule SponsorsWeb do
     end
   end
 
+  def html do
+    quote do
+      use Phoenix.Component  # ✅ Phoenix 1.7 이상에서 HTML 렌더링
+    end
+  end
+
+  def json do
+    quote do
+      use Phoenix.Component  # ✅ JSON 렌더링도 새로운 방식 사용
+    end
+  end
+
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
   """

@@ -7,7 +7,7 @@ defmodule Sponsors.MixProject do
       version: "0.1.0",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -33,9 +33,11 @@ defmodule Sponsors.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:appsignal_phoenix, "~> 2.0.4"},
-      {:bamboo, "~> 1.4"},
-      {:bottle, github: "system76/bottle", ref: "1621c66"},
+      {:appsignal, "~> 2.13"},
+      {:appsignal_phoenix, "~> 2.0"},
+      {:appsignal_plug, "~> 2.0"},
+      {:bamboo, "~> 1.6"},
+      {:bottle, github: "system76/bottle", ref: "4654c83d58c0323f9ad40a8e3cdab8fe2c0110e6"},
       {:bypass, "~> 1.0", only: :test},
       {:cors_plug, "~> 2.0"},
       {:cowboy, "~> 2.8", override: true},
@@ -49,9 +51,14 @@ defmodule Sponsors.MixProject do
       {:jason, "~> 1.2", override: true},
       {:logger_json, github: "Nebo15/logger_json", ref: "8e4290a"},
       {:mox, "~> 0.5", only: :test},
-      {:phoenix_ecto, "~> 4.0"},
-      {:phoenix, "~> 1.5"},
       {:plug_cowboy, "~> 2.0"},
+
+      {:phoenix_ecto, "~> 4.1"},
+      {:phoenix_html, "~> 4.1"},
+      {:phoenix_live_view, "~> 0.20"},
+      {:phoenix, "~> 1.7.1"},
+
+
       {:postgrex, ">= 0.0.0"},
       {:spandex_datadog, "~> 1.1.0"},
       {:spandex_ecto, "~> 0.6.2"},
