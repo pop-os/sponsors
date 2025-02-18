@@ -69,4 +69,4 @@ jobs:
           task-definition: ${{ steps.template.outputs.task-definition }}
           service: staging-so-dod-sponsors
           cluster: so-dod-us-east-2
-          #wait-for-service-stability: true
+          wait-for-service-stability: true
