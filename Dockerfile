@@ -28,18 +28,20 @@ RUN set -xe; \
     mix deps.compile --all; \
     mix release
 
-FROM debian:12 as release
+FROM alpine:3.9 as release
 
 RUN set -xe; \
-    apt-get update && apt-get install -y \
+    apk add --update  --no-cache --virtual .runtime-deps \
         ca-certificates \
-        libmcrypt4 \
-        openssl;
+        libmcrypt \
+        ncurses-libs \
+        tzdata;
 
 # Create a `sponsors` group & user
 # I've been told before it's generally a good practice to reserve ids < 1000 for the system
 RUN set -xe; \
-    adduser -u 1000 -S -h /sponsors -s /bin/sh --group sponsors;
+    addgroup -g 1000 -S sponsors; \
+    adduser -u 1000 -S -h /sponsors -s /bin/sh -G sponsors sponsors;
 
 ARG APP_NAME=sponsors
 
