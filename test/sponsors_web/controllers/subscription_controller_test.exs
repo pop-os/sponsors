@@ -16,7 +16,7 @@ defmodule SponsorsWeb.SubscriptionControllerTest do
         [subscription]
       end)
 
-      assert [%{"id" => ^subscription_id}] =
+      assert %{"data" => [%{"id" => ^subscription_id}]} =
                conn
                |> AuthHelpers.login(internal_customer_id)
                |> put_req_header("content-type", "application/json")
@@ -39,7 +39,7 @@ defmodule SponsorsWeb.SubscriptionControllerTest do
         stripe_source_id: expected_source
       }
 
-      assert %{"stripe_source_id" => ^expected_source} =
+      assert %{"data" => %{"stripe_source_id" => ^expected_source}} =
                conn
                |> AuthHelpers.login(internal_customer_id)
                |> put_req_header("content-type", "application/json")

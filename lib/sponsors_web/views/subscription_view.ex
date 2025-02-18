@@ -1,10 +1,12 @@
 defmodule SponsorsWeb.SubscriptionView do
-  use Phoenix.Controller  # ✅ Phoenix 1.7에서는 View 대신 Controller 사용
+  # ✅ Phoenix 1.7에서는 View 대신 Controller 사용
+  use Phoenix.Controller
 
   def render("index.json", %{subscriptions: subscriptions}) do
     %{
       data: Enum.map(subscriptions, &render_subscription/1)
     }
+
     # render_many(subscriptions, __MODULE__, "subscription.json")
   end
 
@@ -12,6 +14,7 @@ defmodule SponsorsWeb.SubscriptionView do
     %{
       data: render_subscription(subscription)
     }
+
     # render_one(subscription, __MODULE__, "subscription.json")
   end
 

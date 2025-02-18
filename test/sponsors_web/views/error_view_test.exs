@@ -1,15 +1,23 @@
 defmodule SponsorsWeb.ErrorViewTest do
-  use SponsorsWeb.ConnCase, async: true
+  use ExUnit.Case, async: true
 
-  # Bring render/3 and render_to_string/3 for testing custom views
-  import Phoenix.View
+  test "renders 400.json" do
+    assert SponsorsWeb.ErrorView.render("400.json", %{}) == %{errors: %{detail: "Bad Request"}}
+  end
 
-  test "renders 404.json" do
-    assert render(SponsorsWeb.ErrorView, "404.json", []) == %{errors: %{detail: "Not Found"}}
+  test "renders 401.json" do
+    assert SponsorsWeb.ErrorView.render("401.json", %{}) == %{errors: %{detail: "Unauthorized"}}
+  end
+
+  test "renders 402.json" do
+    assert SponsorsWeb.ErrorView.render("402.json", %{}) == %{errors: %{detail: "Payment Required"}}
   end
 
   test "renders 500.json" do
-    assert render(SponsorsWeb.ErrorView, "500.json", []) ==
-             %{errors: %{detail: "Internal Server Error"}}
+    assert SponsorsWeb.ErrorView.render("500.json", %{}) == %{errors: %{detail: "Internal Server Error"}}
+  end
+
+  test "renders 404.json via template_not_found" do
+    assert SponsorsWeb.ErrorView.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
   end
 end

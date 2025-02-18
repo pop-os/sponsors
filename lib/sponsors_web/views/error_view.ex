@@ -1,5 +1,5 @@
 defmodule SponsorsWeb.ErrorView do
-  use Phoenix.Controller  # ✅ Phoenix 1.7에서는 View 대신 Controller 사용
+  use Phoenix.Controller, formats: [:json]
 
   def render("400.json", _assigns) do
     %{errors: %{detail: "Bad Request"}}
@@ -16,6 +16,8 @@ defmodule SponsorsWeb.ErrorView do
   def render("500.json", _assigns) do
     %{errors: %{detail: "Internal Server Error"}}
   end
+
+  def render(template, assigns), do: template_not_found(template, assigns)
 
   # By default, Phoenix returns the status message from
   # the template name. For example, "404.json" becomes

@@ -52,13 +52,10 @@ defmodule Sponsors.MixProject do
       {:logger_json, github: "Nebo15/logger_json", ref: "8e4290a"},
       {:mox, "~> 0.5", only: :test},
       {:plug_cowboy, "~> 2.0"},
-
       {:phoenix_ecto, "~> 4.1"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_view, "~> 0.20"},
       {:phoenix, "~> 1.7.1"},
-
-
       {:postgrex, ">= 0.0.0"},
       {:spandex_datadog, "~> 1.1.0"},
       {:spandex_ecto, "~> 0.6.2"},

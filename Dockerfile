@@ -2,14 +2,11 @@ FROM elixir:1.15 as build
 
 # Install deps
 RUN set -xe; \
-    apk add --update  --no-cache --virtual .build-deps \
+    apt-get update && apt-get install -y \
+        build-essential \
         ca-certificates \
-        g++ \
-        gcc \
         git \
-        make \
-        musl-dev \
-        tzdata;
+        libmcrypt-dev;
 
 # Use the standard /usr/local/src destination
 RUN mkdir -p /usr/local/src/sponsors
@@ -31,20 +28,18 @@ RUN set -xe; \
     mix deps.compile --all; \
     mix release
 
-FROM debian:12-slim as release
+FROM debian:12 as release
 
 RUN set -xe; \
-    apk add --update  --no-cache --virtual .runtime-deps \
+    apt-get update && apt-get install -y \
         ca-certificates \
-        libmcrypt \
-        ncurses-libs \
-        tzdata;
+        libmcrypt4 \
+        openssl;
 
 # Create a `sponsors` group & user
 # I've been told before it's generally a good practice to reserve ids < 1000 for the system
 RUN set -xe; \
-    addgroup -g 1000 -S sponsors; \
-    adduser -u 1000 -S -h /sponsors -s /bin/sh -G sponsors sponsors;
+    adduser -u 1000 -S -h /sponsors -s /bin/sh --group sponsors;
 
 ARG APP_NAME=sponsors
 
