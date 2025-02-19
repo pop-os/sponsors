@@ -6,6 +6,7 @@ RUN set -xe; \
         ca-certificates \
         g++ \
         gcc \
+        libstdc++ \
         git \
         make \
         musl-dev \
