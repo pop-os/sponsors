@@ -6,7 +6,6 @@ RUN set -xe; \
         ca-certificates \
         g++ \
         gcc \
-        libstdc++ \
         git \
         make \
         musl-dev \
@@ -38,6 +37,7 @@ RUN set -xe; \
     apk add --update  --no-cache --virtual .runtime-deps \
         ca-certificates \
         libmcrypt \
+        libstdc++ \
         ncurses-libs \
         tzdata;
 
