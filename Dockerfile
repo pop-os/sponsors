@@ -47,7 +47,7 @@ RUN set -xe; \
     addgroup -g 1000 -S sponsors; \
     adduser -u 1000 -S -h /sponsors -s /bin/sh -G sponsors sponsors;
 
-RUN curl -o /etc/ssl/certs/rds-ca-bundle.pem https://staging-so-dod-sponsors.cdyuupojfw4c.us-east-2.rds.amazonaws.com/global/global-bundle.pem
+# RUN curl -o /etc/ssl/certs/rds-ca-bundle.pem https://staging-so-dod-sponsors.cdyuupojfw4c.us-east-2.rds.amazonaws.com/global/global-bundle.pem
 
 ARG APP_NAME=sponsors
 

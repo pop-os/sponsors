@@ -12,10 +12,11 @@ config :sponsors, Sponsors.Repo,
   username: config["DB_USERNAME"],
   password: config["DB_PASSWORD"],
   hostname: config["DB_HOST"],
-  ssl: [
-    verify: :verify_peer,
-    cacertfile: "/etc/ssl/certs/rds-ca-bundle.pem"
-  ]
+  ssl: true
+  # ssl: [
+  #   verify: :verify_peer,
+  #   cacertfile: "/etc/ssl/certs/rds-ca-bundle.pem"
+  # ]
 
 config :sponsors, Sponsors.Mailer, api_key: config["MAILGUN_KEY"]
 
