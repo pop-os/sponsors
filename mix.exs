@@ -38,7 +38,7 @@ defmodule Sponsors.MixProject do
       {:appsignal_plug, "~> 2.0"},
       {:bamboo, "~> 1.6"},
       {:bottle, github: "system76/bottle", ref: "4654c83d58c0323f9ad40a8e3cdab8fe2c0110e6"},
-      {:bypass, "~> 1.0", only: :test},
+      {:bypass, "~> 2.1", only: :test},
       {:cors_plug, "~> 2.0"},
       {:cowboy, "~> 2.8", override: true},
       {:cowlib, "~> 2.9.1", override: true},

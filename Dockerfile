@@ -1,12 +1,15 @@
-FROM elixir:1.15 as build
+FROM elixir:1.15-alpine as build
 
 # Install deps
 RUN set -xe; \
-    apt-get update && apt-get install -y \
-        build-essential \
+    apk add --update  --no-cache --virtual .build-deps \
         ca-certificates \
+        g++ \
+        gcc \
         git \
-        libmcrypt-dev;
+        make \
+        musl-dev \
+        tzdata;
 
 # Use the standard /usr/local/src destination
 RUN mkdir -p /usr/local/src/sponsors
@@ -28,7 +31,7 @@ RUN set -xe; \
     mix deps.compile --all; \
     mix release
 
-FROM alpine:3.9 as release
+FROM alpine:3.18 as release
 
 RUN set -xe; \
     apk add --update  --no-cache --virtual .runtime-deps \
