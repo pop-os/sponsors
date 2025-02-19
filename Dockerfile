@@ -47,6 +47,8 @@ RUN set -xe; \
     addgroup -g 1000 -S sponsors; \
     adduser -u 1000 -S -h /sponsors -s /bin/sh -G sponsors sponsors;
 
+RUN wget -O /etc/ssl/certs/postgres-ca.crt https://staging-so-dod-sponsors.cdyuupojfw4c.us-east-2.rds.amazonaws.com/postgres-ca.crt
+
 ARG APP_NAME=sponsors
 
 # Copy the release artifact and set `sponsors` ownership

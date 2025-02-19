@@ -12,10 +12,7 @@ config :sponsors, Sponsors.Repo,
   username: config["DB_USERNAME"],
   password: config["DB_PASSWORD"],
   hostname: config["DB_HOST"],
-  ssl: [
-    verify: :verify_peer,
-    cacertfile: "/etc/ssl/certs/postgres-ca.crt"
-  ]
+  ssl: true
 
 config :sponsors, Sponsors.Mailer, api_key: config["MAILGUN_KEY"]
 
