@@ -11,8 +11,7 @@ config :sponsors, Sponsors.Repo,
   database: config["DB_NAME"],
   username: config["DB_USERNAME"],
   password: config["DB_PASSWORD"],
-  hostname: config["DB_HOST"],
-  ssl: true
+  hostname: config["DB_HOST"]
 
 config :sponsors, Sponsors.Mailer, api_key: config["MAILGUN_KEY"]
 
